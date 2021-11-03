@@ -195,6 +195,24 @@ def sign_up():
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
 
+@app.route("/get_posts", methods=['GET'])
+def get_stars():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 포스팅 목록 받아오기
+        username_receive = request.args.get("username_give")
+
+        posts2 = list(db.likes.find({"username": username_receive}).sort("date", -1).limit(20))
+
+        for post2 in posts2:
+            post2["_id"] = str(post2["_id"])
+            post2["count_heart2"] = db.likes.count_documents({"post2_id": post2["_id"], "type": "heart"})
+            post2["heart_by_me2"] = bool(
+                db.likes.find_one({"post2_id": post2["_id"], "type": "heart", "username": payload['id']}))
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts2": posts2})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=3000, debug=True)

@@ -27,6 +27,7 @@
 
         $(document).ready(function () {
             get_posts('{{ user_info.username }}')
+            get_stars('{{ user_info.username }}')
         })
 
         function sign_out() {
@@ -270,8 +271,8 @@
         </div>
         <div class="right">
             <h2 class="container-right">즐겨찾기 목록</h2>
-            <div id="post-box" class="container-right">
-        <div class="box">
+            <div id="post-box2" class="container-right">
+        <div class="box2">
             <article class="media">
                 <div class="media-left">
                     <a class="image is-64x64" href="#">
