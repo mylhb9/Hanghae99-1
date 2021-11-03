@@ -12,12 +12,12 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-# client = MongoClient('localhost', 27017)
-# db = client.dbspartapasta
+client = MongoClient('localhost', 27017)
+db = client.dbspartapasta
 
 
-client = MongoClient('mongodb://3.35.47.47', 27017, username="test", password="test")
-db = client.dbsparta
+# client = MongoClient('mongodb://3.35.47.47', 27017, username="test", password="test")
+# db = client.dbsparta
 
 
 @app.route('/')
@@ -197,4 +197,4 @@ def sign_up():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=3000, debug=True)
