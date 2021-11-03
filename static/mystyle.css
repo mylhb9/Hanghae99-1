@@ -1,7 +1,25 @@
- .card-columns {
+
+div.left {
+        width: 50%;
+        float: left;
+        box-sizing: border-box;
+
+
+}
+div.right {
+        width: 50%;
+        float: right;
+        box-sizing: border-box;
+
+
+}
+
+
+.card-columns {
      width: 800px;
      margin: auto;
  }
+
 .regist-devicetype {
     width: 800px;
     padding-right: 100px;
@@ -29,6 +47,14 @@ body {
 .section {
     padding: 3rem 5rem;
     max-width: 750px;
+    margin: auto;
+}
+.container-left {
+    width: 800px;
+    margin: auto;
+}
+.container-right {
+    width: 800px;
     margin: auto;
 }
 

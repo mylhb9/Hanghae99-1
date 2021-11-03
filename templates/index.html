@@ -46,7 +46,14 @@
         <a class="navbar-item" href="/">
             <img src="{{ url_for('static', filename='200X200Example.png') }}">
             <strong class="is-sparta"
-                    style="font-family: 'Stylish', sans-serif;font-size: larger;">SWEETER</strong>
+                    style="font-family: 'Stylish', sans-serif;font-size: larger;">스아</strong>
+        </a>
+    </div>
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/user/{{ user_info.username }}">
+            <img src="{{ url_for('static', filename='200X200Example.png') }}">
+            <strong class="is-sparta"
+                    style="font-family: 'Stylish', sans-serif;font-size: larger;">즐겨찾기</strong>
         </a>
     </div>
 </nav>
@@ -102,6 +109,28 @@
 </section>
 
 <div class="card-columns">
+    <div class="card">
+        <img class="card-img-top"
+             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
+             alt="Card image cap" onclick='$("#mymodal").addClass("is-active")'>
+        <div class="card-body">
+
+            <strong class="card-img-top" onclick='$("#mymodal").addClass("is-active")'> Iphone </strong>
+            <p class="card-text">아이폰 지리지?</p>
+        </div>
+
+    </div>
+    <div class="card">
+        <img class="card-img-top"
+             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
+             alt="Card image cap" onclick='$("#mymodal").addClass("is-active")'>
+        <div class="card-body">
+
+            <strong class="card-img-top" onclick='$("#mymodal").addClass("is-active")'> Iphone </strong>
+            <p class="card-text">아이폰 지리지?</p>
+        </div>
+
+    </div>
     <div class="card">
         <img class="card-img-top"
              src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
