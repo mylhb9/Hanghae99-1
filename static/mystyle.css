@@ -5,9 +5,15 @@
 .regist-devicetype {
     width: 800px;
     padding-right: 100px;
+    margin: auto;
 
 }
-
+.card-img-top {
+    cursor: pointer;
+}
+.card-title {
+    cursor: pointer;
+}
 
 body {
     background-color: RGBA(232, 52, 78, 0.2);
