@@ -97,8 +97,10 @@ function get_posts(username) {
         success: function (response) {
             if (response["result"] == "success") {
                 let posts = response["posts"]
+                console.log(posts)
                 for (let i = 0; i < posts.length; i++) {
                     let post = posts[i]
+
                     let time_post = new Date(post["date"])
                     let time_before = time2str(time_post)
                     let class_heart = post['heart_by_me'] ? "fa-heart" : "fa-heart-o"
@@ -144,38 +146,42 @@ function get_stars(username) {
     $.ajax({
         type: "GET",
         // url: "/get_posts",
-        url: `/get_posts?username_give=${username}`,
+        url: `/get_stars?username_give=${username}`,
         data: {},
         success: function (response) {
             if (response["result"] == "success") {
-                let posts2 = response["posts2"]
-                for (let i = 0; i < posts2.length; i++) {
-                    let post2 = posts2[i]
-                    let time_post = new Date(post2["date"])
+                let posts = response["posts"]
+                console.log(posts)
+                for (let i = 0; i < posts.length; i++) {
+                    let post = posts[i]
+
+                    let time_post = new Date(post["date"])
                     let time_before = time2str(time_post)
-                    let class_heart2 = post2['heart_by_me2'] ? "fa-heart" : "fa-heart-o"
-                    let count_heart2 = post2['count_heart2']
-                    let html_temp = `<div class="box2" id="${post2["_id"]}">
+                    let class_heart = post['heart_by_me'] ? "fa-heart" : "fa-heart-o"
+                    let count_heart = post['count_heart']
+                    let html_temp = ""
+                    if (post['heart_by_me'] >= 1) {
+                        html_temp = `<div class="box" id="${post["_id"]}">
                                         <article class="media">
                                             <div class="media-left">
-                                                <a class="image is-64x64" href="/user/${post2['username']}">
-                                                    <img class="is-rounded" src="/static/${post2['profile_pic_real']}"
+                                                <a class="image is-64x64" href="/user/${post['username']}">
+                                                    <img class="is-rounded" src="/static/${post['profile_pic_real']}"
                                                          alt="Image">
                                                 </a>
                                             </div>
                                             <div class="media-content">
                                                 <div class="content">
                                                     <p>
-                                                        <strong>${post2['profile_name']}</strong> <small>@${post2['username']}</small> <small>${time_before}</small>
+                                                        <strong>${post['profile_name']}</strong> <small>@${post['username']}</small> <small>${time_before}</small>
                                                         <br>
-                                                        ${post2['comment']}
+                                                        ${post['comment']}
                                                     </p>
                                                 </div>
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
-                                                        <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('${post2['_id']}', 'heart')">
-                                                            <span class="icon is-small"><i class="fa  ${class_heart2}"
-                                                                                           aria-hidden="true"></i></span>&nbsp;<span class="like-num">${num2str(count_heart2)}</span>
+                                                        <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('${post['_id']}', 'heart')">
+                                                            <span class="icon is-small"><i class="fa  ${class_heart}"
+                                                                                           aria-hidden="true"></i></span>&nbsp;<span class="like-num">${num2str(count_heart)}</span>
                                                         </a>
                                                     </div>
 
@@ -183,6 +189,7 @@ function get_stars(username) {
                                             </div>
                                         </article>
                                     </div>`
+                    }
                     $("#post-box2").append(html_temp)
                 }
             }
