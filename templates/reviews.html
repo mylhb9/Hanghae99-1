@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <!-- Webpage Title -->
+    <title>Smart Archive | Reviews</title>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta property="og:title" content="Smart Archive"/>
+    <meta property="og:description" content="Welcome to our Archive"/>
+    <meta property="og:image" content="{{ url_for('static', filename='favicon.ico') }}"/>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <style>
+        * {
+            font-family: 'Nanum Myeongjo', serif;
+        }
+
+        body {
+            background-image: url("https://negimos.com/wp-content/uploads/2020/12/Gadjet-1-1024x1024.jpg");
+            background-size: contain;
+        }
+
+        .section {
+            {#padding: 1rem 1.5rem;#}
+
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 4rem;
+        }
+
+        .subtitle {
+            {#font-size: 1px;#}
+        }
+
+        .is-sparta {
+            color: #1c1617 !important;
+        }
+        .rightgo {
+
+            float: right;
+            margin-top: 5px;
+            margin-right: 270px;
+
+
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+
+            showranking()
+        })
+
+        function postranking() {
+                let url = 'https://www.11st.co.kr/browsing/BestSeller.tmall?method=getBestSellerMain&cornerNo=10#pageNum%%3'
+                $.ajax({
+
+                        type: "POST",
+                        url: "/reviews/reviewsee",
+                        data: {url_give:url},
+                        success: function (response) { // 성공하면
+                            alert(response["msg"]);
+                        }
+                    })
+                }
+        function showranking() {
+            $.ajax({
+                type: "GET",
+                url: "/reviews/reviewsee",
+                data: {},
+                success: function (response) {
+                    let rankings = response['all_rankings']
+                    for (let i = 0; i < 20; i++) {
+                        let rank = rankings[i]['rank']
+                        let name = rankings[i]['name']
+                        let img = rankings[i]['img']
+
+                        let temp_html = `<tr>
+                                            <th scope="row">${rank}</th>
+                                            <td>${name}</td>
+                                            <td><img class=""
+                                                 src="${img}"
+                                                 alt="" onclick=''></td>
+
+
+                                        </tr>`
+                        $('#rankbox').append(temp_html)
+
+
+                    }
+                }
+            })
+        }
+
+    </script>
+
+</head>
+<body>
+<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="{{ url_for('static', filename='favicon.ico') }}">
+            <strong class="is-sparta"
+                    style="font-family: 'Stylish', sans-serif;font-size: larger;">Smart Archive</strong>
+        </a>
+    </div>
+
+</nav>
+ <section class="hero is-white" style="margin-top:50px">
+    <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
+        <h2 class="title is-sparta">기기 추천</h2>
+        <h4 class="subtitle is-sparta ">Smart Archive</h4>
+
+    </div>
+
+</section>
+<button type="button" class="btn btn-dark rightgo" onclick="postranking();window.location.reload()">최신으로 업데이트!</button>
+<section class="section">
+
+
+    <div class="box" style="max-width: 900px;margin:auto;">
+            <article class="media">
+                <table class="table table-bordered table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">기기</th>
+                        <th scope="col">이미지</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="rankbox">
+
+                    </tbody>
+                </table>
+            </article>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

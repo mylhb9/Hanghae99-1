@@ -1,17 +1,30 @@
+* {
+    font-family: 'Dongle', sans-serif;
+    font-family: 'Jua', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.rightgo {
 
+            float: right;
+            margin-top: 5px;
+            margin-right: 270px;
+
+
+        }
+.labelprofile{
+    color: #1c1617;
+}
 div.left {
         width: 50%;
         float: left;
-        box-sizing: border-box;
 
+        box-sizing: border-box;
 
 }
 div.right {
         width: 50%;
         float: right;
         box-sizing: border-box;
-
-
 }
 
 
@@ -19,6 +32,10 @@ div.right {
      width: 800px;
      margin: auto;
  }
+
+.label {
+    color: #fffefe;
+}
 
 .regist-devicetype {
     width: 800px;
@@ -39,7 +56,7 @@ div.right {
 }
 
 body {
-    background-color: RGBA(232, 52, 78, 0.2);
+    background-image: url("https://c.wallhere.com/photos/0b/2d/simple_blue_gray_blank_simple_background-1221799.jpg!d");
     min-height: 100vh;
 		padding-top: 3.25rem;
 }
@@ -50,28 +67,32 @@ body {
     margin: auto;
 }
 .container-left {
-    width: 800px;
+    color: #fbf2f2;
+    /*width: 800px;*/
+    width: 50vw;
     margin: auto;
 }
 .container-right {
-    width: 800px;
+    color: #fbf2f2;
+    /*width: 800px;*/
+    width: 50vw;
     margin: auto;
 }
 
 .is-sparta {
-    color: #e8344e !important;
+    color: #1c1617 !important;
 }
 
 .button.is-sparta {
-    background-color: #e8344e;
+    background-color: #1c1617;
     border-color: transparent;
-    color: #fff !important;
+    color: #fbf2f2 !important;
 }
 
 .button.is-sparta.is-outlined {
     background-color: transparent;
-    border-color: #e8344e;
-    color: #e8344e !important;
+    border-color: #1c1617;
+    color: #1c1617 !important;
 }
 
 .modal-content {
@@ -87,5 +108,14 @@ input::-webkit-calendar-picker-indicator {
     object-fit:cover;
     width:100%;
     height:100%;
-}.
+}
 
+.cards-box {
+            display: flex;
+            /*justify-content: space-between;*/
+            margin: 0 70px;
+            margin-top: 65px;
+            flex-wrap: wrap;
+            float:left;
+
+}
