@@ -108,7 +108,7 @@
              alt="Card image cap" onclick='$("#mymodal").addClass("is-active")'>
         <div class="card-body">
 
-            <a href="" data-toggle="modal" data-target="#exampleModalLong1"> Iphone </a>
+            <strong class="card-img-top" onclick='$("#mymodal").addClass("is-active")'> Iphone </strong>
             <p class="card-text">아이폰 지리지?</p>
         </div>
 
@@ -132,6 +132,32 @@
                 <p class="help is-danger">
                     필수항목입니다.
                 </p>
+            </div>
+        </div>
+    </div>
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label" for="input-pic">기기 사진</label>
+        </div>
+        <div class="field-body">
+            <div class="field-body">
+                <div class="control is-expanded">
+                    <div class="file has-name">
+                        <label class="file-label" style="width:100%">
+                            <input id="input-pic" class="file-input" type="file"
+                                   name="resume">
+
+                            <span id="file-name" class="file-name"
+                                  style="...">{{ user_info.profile_pic }}</span>
+                            <span class="file-cta">
+                                <span class="file-icon"><i
+                                    class="fa fa-upload"></i></span>
+                                <span class="file-label">파일 선택</span>
+                            </span>
+                        </label>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -182,8 +208,11 @@
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick='$("#mymodal").removeClass("is-active")'>리뷰쓰기</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='$("#mymodal").removeClass("is-active")'>나가기</button>
+                <button type="button" class="btn btn-primary" onclick='$("#mymodal").removeClass("is-active")'>리뷰쓰기
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick='$("#mymodal").removeClass("is-active")'>나가기
+                </button>
 
             </div>
         </div>
