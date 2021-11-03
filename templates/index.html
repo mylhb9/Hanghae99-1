@@ -105,65 +105,10 @@
     <div class="card">
         <img class="card-img-top"
              src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
-             alt="Card image cap" data-toggle="modal" data-target="#exampleModalLong">
+             alt="Card image cap" onclick='$("#mymodal").addClass("is-active")'>
         <div class="card-body">
 
-            <a href="" data-toggle="modal" data-target="#exampleModalLong" > Iphone </a>
-            <p class="card-text">아이폰 지리지?</p>
-        </div>
-
-    </div>
-    <div class="card">
-        <img class="card-img-top"
-             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
-             alt="Card image cap" data-toggle="modal" data-target="#exampleModalLong">
-        <div class="card-body">
-
-            <a href="" data-toggle="modal" data-target="#exampleModalLong" > Iphone </a>
-            <p class="card-text">아이폰 지리지?</p>
-        </div>
-
-    </div>
-    <div class="card">
-        <img class="card-img-top"
-             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
-             alt="Card image cap" data-toggle="modal" data-target="#exampleModalLong">
-        <div class="card-body">
-
-            <a href="" data-toggle="modal" data-target="#exampleModalLong" > Iphone </a>
-            <p class="card-text">아이폰 지리지?</p>
-        </div>
-
-    </div>
-    <div class="card">
-        <img class="card-img-top"
-             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
-             alt="Card image cap" data-toggle="modal" data-target="#exampleModalLong">
-        <div class="card-body">
-
-            <a href="" data-toggle="modal" data-target="#exampleModalLong" > Iphone </a>
-            <p class="card-text">아이폰 지리지?</p>
-        </div>
-
-    </div>
-    <div class="card">
-        <img class="card-img-top"
-             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
-             alt="Card image cap" data-toggle="modal" data-target="#exampleModalLong">
-        <div class="card-body">
-
-            <a href="" data-toggle="modal" data-target="#exampleModalLong" > Iphone </a>
-            <p class="card-text">아이폰 지리지?</p>
-        </div>
-
-    </div>
-    <div class="card">
-        <img class="card-img-top"
-             src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/57BB6GHQZRFPXNTZD7IF5EA7XQ.png"
-             alt="Card image cap" data-toggle="modal" data-target="#exampleModalLong">
-        <div class="card-body">
-
-            <a href="" data-toggle="modal" data-target="#exampleModalLong" > Iphone </a>
+            <a href="" data-toggle="modal" data-target="#exampleModalLong1"> Iphone </a>
             <p class="card-text">아이폰 지리지?</p>
         </div>
 
@@ -220,31 +165,31 @@
     </div>
 </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-    Launch demo modal
-</button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-     aria-hidden="true">
+<div class="modal" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-background" onclick='$("#mymodal").removeClass("is-active")'></div>
+
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="mymodal">아이폰 리뷰</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" onclick='$("#mymodal").removeClass("is-active")'>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick='$("#mymodal").removeClass("is-active")'>리뷰쓰기</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='$("#mymodal").removeClass("is-active")'>나가기</button>
+
             </div>
         </div>
     </div>
+    <button class="modal-close is-large" aria-label="close"
+            onclick='$("#modal-edit").removeClass("is-active")'></button>
 </div>
 <div id="post-box" class="container">
     <div class="box">

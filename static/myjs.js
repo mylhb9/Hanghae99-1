@@ -137,6 +137,8 @@ function get_posts(username) {
         }
     })
 }
-
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
 
 
