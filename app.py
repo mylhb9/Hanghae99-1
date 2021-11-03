@@ -17,7 +17,7 @@ db = client.dbspartapasta
 
 
 # client = MongoClient('mongodb://3.35.47.47', 27017, username="test", password="test")
-# db = client.dbsparta_plus_week4
+# db = client.dbsparta
 
 
 @app.route('/')

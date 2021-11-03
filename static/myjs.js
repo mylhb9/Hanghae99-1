@@ -122,7 +122,7 @@ function get_posts(username) {
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
                                                         <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('${post['_id']}', 'heart')">
-                                                            <span class="icon is-small"><i class="fa %{class_heart}"
+                                                            <span class="icon is-small"><i class="fa  ${class_heart}"
                                                                                            aria-hidden="true"></i></span>&nbsp;<span class="like-num">${num2str(count_heart)}</span>
                                                         </a>
                                                     </div>
