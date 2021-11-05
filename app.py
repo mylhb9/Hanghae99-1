@@ -6,18 +6,35 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
+import requests
+from bs4 import BeautifulSoup
+
+
+
+# for tr in trs:
+#     print(tr.text)
+# for te in tes:
+#     print(te.text)
+# for ti in tis:
+#     print(ti['src'])
+
+
+
+
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('localhost', 27017)
-db = client.dbspartapasta
+# client = MongoClient('localhost', 27017)
+# db = client.dbspartapasta
+#
+
+client = MongoClient('mongodb://3.35.47.47', 27017, username="test", password="test")
+db = client.dbsparta
 
 
-# client = MongoClient('mongodb://3.35.47.47', 27017, username="test", password="test")
-# db = client.dbsparta
 
 
 @app.route('/')
@@ -38,6 +55,48 @@ def home():
 def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
+
+
+@app.route('/reviews')
+def reviews():
+
+    return render_template('reviews.html')
+
+@app.route('/reviews/reviewsee', methods=['POST'])
+def saving():
+    url_receive = request.form['url_give']
+
+
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get(url_receive, headers=headers)
+
+    soup = BeautifulSoup(data.text, 'html.parser')
+    # trs = soup.select('#bestPrdList div > a > div.pname > p')
+    # tes = soup.select('#bestPrdList div > a > span')
+    # tis = soup.select('#bestPrdList div > a > div.img_plot > img')
+    tts = soup.select('#bestPrdList div > a')
+    # print(trs)
+    for tt in tts:
+        name_tag = tt.select_one('div.pname > p')
+        rank_tag = tt.select_one('span')
+        img_tag = tt.select_one('div.img_plot > img')
+        if name_tag is not None:
+            name = name_tag.text
+            rank = rank_tag.text
+            img = img_tag['src']
+
+
+            doc = {'name': name, 'rank': rank, 'img': img}
+            db.ranking.insert_one(doc)
+    return jsonify({'msg':'업데이트 되었습니다!'})
+
+@app.route('/reviews/reviewsee', methods=['GET'])
+def listing():
+
+    rankings = list(db.ranking.find({}, {'_id': False}))
+    return jsonify({'all_rankings':rankings})
 
 
 @app.route('/user/<username>')
@@ -116,15 +175,19 @@ def posting():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 포스팅하기
         user_info = db.users.find_one({"username": payload["id"]})
+        name_receive = request.form["name_give"]
         comment_receive = request.form["comment_give"]
         date_receive = request.form["date_give"]
         doc = {
             "username": user_info["username"],
             "profile_name": user_info["profile_name"],
             "profile_pic_real": user_info["profile_pic_real"],
+            "name": name_receive,
             "comment": comment_receive,
             "date": date_receive
         }
+        print('insert doc : ', doc)
+
         db.posts.insert_one(doc)
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -149,6 +212,33 @@ def get_posts():
             post["heart_by_me"] = bool(
                 db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": payload['id']}))
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+
+@app.route("/get_posts2", methods=['GET'])
+def get_posts2():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 포스팅 목록 받아오기
+        username_receive = request.args.get("username_give")
+        postings = list(db.postings.find({}).sort("date", -1).limit(20))
+
+        posts = list(db.posts.find({}).sort("date", -1).limit(20))
+
+        for posting in postings:
+            posting["_id"] = str(posting["_id"])
+            name = posting["name"]
+            for post in posts:
+                post["_id"] = str(post["_id"])
+                # post["same_review"] = bool(db.posts.find({"post_id": post["_id"], "name": name}))
+                post["count_heart"] = db.likes.count_documents({"post_id": post["_id"], "type": "heart"})
+                post["heart_by_me"] = bool(
+                    db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": payload['id']}))
+
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "postings": postings, "name": name})
+
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -196,5 +286,55 @@ def sign_up():
     return jsonify({'result': 'success'})
 
 
+@app.route("/get_stars", methods=['GET'])
+def get_stars():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 포스팅 목록 받아오기
+        username_receive = request.args.get("username_give")
+
+        posts = list(db.posts.find({}).sort("date", -1).limit(20))
+
+        for post in posts:
+            post["_id"] = str(post["_id"])
+            post["count_heart"] = db.likes.count_documents({"post_id": post["_id"], "type": "heart"})
+            post["heart_by_me"] = bool(
+                db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": payload['id']}))
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+
+@app.route('/review', methods=['POST'])
+def write_review():
+    name_receive = request.form['title_give']
+    file = request.files['file_give']
+    desc_receive = request.form['content_give']
+
+    today = datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+
+    filename = f'file-{mytime}'
+
+    extension = file.filename.split('.')[-1]
+
+    save_to = f'static/{filename}.{extension}'
+    file.save(save_to)
+    doc = {
+        'name': name_receive,
+        'file': f'{filename}.{extension}',
+        'desc': desc_receive
+    }
+    db.postings.insert_one(doc)
+    return jsonify({'msg': '포스팅 되었습니다'})
+
+
+@app.route('/review', methods=['GET'])
+def read_reviews():
+    postings = list(db.postings.find({}, {'_id': False}))
+    return jsonify({'all_postings': postings})
+
+
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=3000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
