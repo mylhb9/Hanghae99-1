@@ -66,6 +66,7 @@ body {
     max-width: 750px;
     margin: auto;
 }
+/*프로필의 좌우를 화면 개체에 맞게 분리*/
 .container-left {
     color: #fbf2f2;
     /*width: 800px;*/
