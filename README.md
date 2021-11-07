@@ -15,7 +15,7 @@ http://beomin.shop/
 
 영상링크
 
-https://www.youtube.com/watch?v=CxARux2upC0
+https://youtu.be/YxtOBurRSWE
 
 기능소개
 
